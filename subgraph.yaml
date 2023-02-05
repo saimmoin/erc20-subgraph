@@ -1,0 +1,27 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Beagle
+    network: goerli
+    source:
+      address: "0xe9eb8A8E271E6bEa3FAf89871EFE10BADb5402a1"
+      abi: Beagle
+      startBlock: 8437896
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+        - Approval
+      abis:
+        - name: Beagle
+          file: ./abis/Beagle.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+      file: ./src/beagle.ts
